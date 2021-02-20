@@ -41,6 +41,22 @@ describe ActiveYaml::Base do
         expect(State.count).to be > 0
       end
     end
+
+    context "with multiple threads" do
+      it "reliably returns the data in every thread" do
+        10.times.each do
+          threads = 3.times.map do
+            Thread.new { Thread.current[:result] = State.all.length }
+          end
+          results = threads.map do |thread|
+            thread.join
+            thread[:result]
+          end
+          expect(results).to eq [2] * 3
+        end
+      end
+    end
+
   end
 
   describe ".where" do

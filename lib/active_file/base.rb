@@ -14,8 +14,8 @@ module ActiveFile
 
       def reload(force = false)
         return if !self.dirty && !force && self.data_loaded
-        self.data_loaded = true
         self.data = load_file
+        self.data_loaded = true
         mark_clean
       end
 

@@ -145,7 +145,7 @@ module ActiveHash
       end
 
       def next_id
-        max_record = all.max { |a, b| a.id <=> b.id }
+        max_record = @records.max { |a, b| a.id <=> b.id }
         if max_record.nil?
           1
         elsif max_record.id.is_a?(Numeric)
